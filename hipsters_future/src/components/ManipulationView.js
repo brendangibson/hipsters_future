@@ -43,7 +43,8 @@ class ManipulationView extends Component {
       zoom: 1,
       angle: 45,
       teardrop1: undefined,
-      teardrop2: undefined
+      teardrop2: undefined,
+      inklinationJunction: 0.5
     };
   }
 
@@ -89,7 +90,7 @@ class ManipulationView extends Component {
   }
 
   render() {
-    const {inverted, zoom, angle, teardrop1, teardrop2} = this.state;
+    const {inverted, zoom, angle, teardrop1, teardrop2, inklinationJunction} = this.state;
     const {imageData} = this.props;
     const promptString = this.getPromptString();
 
@@ -101,7 +102,7 @@ class ManipulationView extends Component {
         </div>
         <MainImage imageData={imageData} teardrop1={teardrop1}
           teardrop2={teardrop2} angle={angle} zoom={zoom}
-          onChange={this.onImageChange} inverted={inverted}/>
+          onChange={this.onImageChange} inverted={inverted} inklinationJunction={inklinationJunction}/>
 
 
         <div style={angleOverlayStyle}>

@@ -26,7 +26,7 @@ const svgStyle = {
 */
 const MainImage = props => {
 
-    const {imageData, zoom, teardrop1, teardrop2, inverted, angle} = props
+    const {imageData, zoom, teardrop1, teardrop2, inverted, angle, inklinationJunction} = props
 
     const innerStyle = {
       position: 'absolute',
@@ -80,7 +80,7 @@ const MainImage = props => {
         if (!teardrop2 || !teardrop2.length) {
           console.log('setting teardrop2')
 
-          props.onChange({teardrop2: [x, y]})
+          props.onChange && props.onChange({teardrop2: [x, y]})
         }
       }
 
@@ -88,11 +88,15 @@ const MainImage = props => {
     }
 
     const onTeardrop1Drag = (position) => {
-      props.onChange({teardrop1: [position.x, position.y]})
+      props.onChange && props.onChange({teardrop1: [position.x, position.y]})
     }
 
     const onTeardrop2Drag = (position) => {
-      props.onChange({teardrop2: [position.x, position.y]})
+      props.onChange && props.onChange({teardrop2: [position.x, position.y]})
+    }
+
+    const onInklinationDrag = (position) => {
+
     }
 
 
@@ -106,7 +110,8 @@ const MainImage = props => {
             <Teardrop position={teardrop2} onDrag={onTeardrop2Drag}/>
             <svg style={svgStyle}>
               <TeardropLine teardrop1={teardrop1} teardrop2={teardrop2} />
-              <InklinationLine teardrop1={teardrop1} teardrop2={teardrop2} angle={angle}/>
+              <InklinationLine onDrag={onInklinationDrag} teardrop1={teardrop1}
+                teardrop2={teardrop2} angle={angle} junction={inklinationJunction} />
             </svg>
           </div>
           </div>

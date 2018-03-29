@@ -21,16 +21,18 @@ const targetStyle = {
 */
 const InklinationLine = props => {
 
-    const {angle, teardrop1, teardrop2} = props;
+    const {angle, teardrop1, teardrop2, junction} = props;
 
     if (typeof teardrop1 === undefined || typeof teardrop2 === undefined || teardrop1 === undefined || teardrop2 === undefined) {
       return null;
     }
 
 
-    // midpoint of teardrop line
-    const x1 = (teardrop1[0] + teardrop2[0]) / 2;
-    const y1 = (teardrop1[1] + teardrop2[1]) / 2;
+    // percantage of teardrop line for the junction is given  by junction
+    const x1 = (teardrop1[0] + teardrop2[0]) * junction;
+    const y1 = (teardrop1[1] + teardrop2[1]) * junction;
+
+
 
     // angle of teardrop line
     const teardropAngle = Math.atan((teardrop2[1] - teardrop1[1]) / (teardrop2[0] - teardrop1[0]))
