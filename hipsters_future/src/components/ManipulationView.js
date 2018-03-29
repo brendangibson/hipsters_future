@@ -82,7 +82,9 @@ class ManipulationView extends Component {
       this.setState(values)
   }
 
-  onInvertToggle = () => {
+  onInvertToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     this.setState({inverted: !this.state.inverted})
   }
 

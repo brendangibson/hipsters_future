@@ -40,7 +40,7 @@ const InklinationLine = props => {
 
     console.log('angleInRadians: ', angleInRadians);
 
-    const realAngle = angleInRadians + teardropAngle;
+    const realAngle =  teardropAngle - angleInRadians ;
 
     console.log('realAngle: ', realAngle);
 

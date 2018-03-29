@@ -6,6 +6,8 @@ const style = {
   stroke: colors.teardropLine
 };
 
+const xMax = 5000;
+
 /**
 *
 * A line that is drawn between the teardrops
@@ -25,8 +27,17 @@ const TeardropLine = props => {
     const x2 = teardrop2[0];
     const y2 = teardrop2[1];
 
+    const m = (y2-y1)/(x2-x1);
+
+    console.log('m')
+
+    // when x is 0
+
+    const y0 = m * (0 - x1) + y1;
+    const yMax = m * (xMax - x1) + y1;
+
     return (
-      <line x1={x1} y1={y1} x2={x2} y2={y2} style={style}/>
+      <line x1={0} y1={y0} x2={xMax} y2={yMax} style={style}/>
     );
   };
 

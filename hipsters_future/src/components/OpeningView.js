@@ -20,8 +20,12 @@ const titleStyle = {
 
 const imageStyle = {
   display: 'block',
-  margin: '5vh auto',
-  height: '50vh'
+  height: '50vh',
+  boxShadow: '0 3px 3px',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)'
 };
 
 const blurbStyle = {
@@ -33,7 +37,7 @@ const blurbStyle = {
   padding: '5vh',
   background: colors.overlay,
   position: 'absolute',
-  bottom: '15vh'
+  bottom: '30vh'
 }
 
 const buttonWrapperStyle = {

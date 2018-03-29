@@ -14,8 +14,8 @@ const style = {
 }
 
 const svgStyle = {
-  height: '100%',
-  width: '100%'
+  height: '100vh',
+  width: '100vw'
 }
 
 /**
@@ -51,6 +51,12 @@ const MainImage = props => {
     }
 
     const onClick = (e) => {
+
+      // Teardrops already added, ignore
+      if (teardrop1 && teardrop1.length && teardrop2 && teardrop2.length) {
+        return
+      }
+
       console.log('e: ', e);
       const target = e.target
       if (!target) { return }
