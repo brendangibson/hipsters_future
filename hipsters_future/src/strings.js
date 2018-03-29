@@ -1,3 +1,8 @@
+/**
+*
+* All strings used in the app should be stored here.
+*
+*/
 export default {
   title: "Hipster's Future",
   openingBlurb: "Input a scan of the patient's hip socket with an implant and set the angles to ensure a proper fit.",

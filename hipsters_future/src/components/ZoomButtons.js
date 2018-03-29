@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import strings from '../strings';
 
 const MAX = 10;
-const MIN = 0;
+const MIN = 1;
 
+/**
+*
+* Buttons that allow the user to zoom in and out of the image.
+* May not be necessary on an iPad, but helps on a laptop...
+*
+*/
 class ZoomButtons extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +22,12 @@ class ZoomButtons extends Component {
 
     return (
       <div>
-      <button onClick={onZoomClick(zoom + 1)} disabled={zoom === MAX ? true : null}>{strings.zoomInButton}</button>
-      <button onClick={onZoomClick(zoom - 1)} disabled={zoom === MIN ? true : null}>{strings.zoomOutButton}</button>
+        <button onClick={onZoomClick(zoom + 1)} disabled={zoom === MAX ? true : null}>
+          {strings.zoomInButton}
+        </button>
+        <button onClick={onZoomClick(zoom - 1)} disabled={zoom === MIN ? true : null}>
+          {strings.zoomOutButton}
+        </button>
       </div>
     );
   };

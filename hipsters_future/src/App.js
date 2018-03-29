@@ -14,7 +14,8 @@ const manipulationView = Symbol('MANIPULATION_VIEW');
 const style = {
   width: '100vw',
   height: '100vh',
-  background: colors.background
+  background: colors.background,
+  overflow: 'hidden'
 }
 
 
@@ -37,22 +38,28 @@ class App extends Component {
     this.setState({view: manipulationView});
   }
 
+
+  onImageLoad = (blob) => {
+      this.setState({imageData: blob});
+  }
+
   render() {
 
-    const {view} = this.state;
+    const {view, imageData} = this.state;
 
     return (
       <div style={style}>
         {view === openingView ?
-          <OpeningView onImageUpload={this.showImagePreview}/>
+          <OpeningView onInputImage={this.showImagePreview}/>
           : null
         }
         {view === imagePreviewView ?
-          <ImagePreview onContinue={this.showManipulationView}/>
+          <ImagePreview imageData={imageData}
+            onContinue={this.showManipulationView} onImageLoad={this.onImageLoad}/>
           : null
         }
         {view === manipulationView ?
-          <ManipulationView onNewImage={this.showImagePreview}/>
+          <ManipulationView imageData={imageData} onNewImage={this.showImagePreview}/>
           : null
         }
       </div>

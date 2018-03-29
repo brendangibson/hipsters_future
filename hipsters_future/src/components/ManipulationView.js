@@ -5,13 +5,42 @@ import MainImage from './MainImage';
 import AngleEntry from './AngleEntry';
 import Prompt from './Prompt';
 import strings from '../strings';
+import colors from '../colors';
 
+const style = {
+  position: 'absolute',
+  width: '100%',
+  height: '100%'
+}
+
+const controlsStyle = {
+  position: 'absolute',
+  padding: '5vh',
+  background: colors.overlay,
+  top: 0,
+  right: 0,
+  zIndex: 1
+};
+
+const angleOverlayStyle = {
+  position: 'absolute',
+  padding: '2vh',
+  background: colors.overlay,
+  bottom: 0,
+  width: '100%'
+};
+
+/**
+*
+* View where the user can manipulate the teardrops and lines on the image
+*
+*/
 class ManipulationView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       inverted: false,
-      zoom: 0,
+      zoom: 1,
       angle: 45,
       teardrop1: undefined,
       teardrop2: undefined
@@ -24,13 +53,15 @@ class ManipulationView extends Component {
     }
   }
 
-  onAngleChange = (value) => {
+  onAngleChange = (e) => {
+
+    const value = e.target.value;
 
     // Ensure angle is within bounds
     // TODO: error checking on characters
-    if ((value > 0) && (value < 360)) {
+    // if ((value > 0) && (value < 360)) {
       this.setState({angle: value})
-    }
+    // }
   }
 
   getPromptString = () => {
@@ -48,22 +79,33 @@ class ManipulationView extends Component {
   }
 
   onImageChange = (values) => {
-    return () => {
       this.setState(values)
-    }
+  }
+
+  onInvertToggle = () => {
+    this.setState({inverted: !this.state.inverted})
   }
 
   render() {
     const {inverted, zoom, angle, teardrop1, teardrop2} = this.state;
+    const {imageData} = this.props;
     const promptString = this.getPromptString();
 
     return (
-      <div>
-        <InvertButton onInvertToggle={this.onInvertToggle} inverted={inverted}/>
-        <ZoomButtons zoom={zoom} onZoomClick={this.onZoomClick}/>
-        <MainImage teardrop1={teardrop1} teardrop2={teardrop2} angle={angle} onChange={this.onImageChange}/>
-        <AngleEntry angle={angle} onChange={this.onAngleChange}/>
-        <Prompt string={promptString}/>
+      <div style={style}>
+        <div style={controlsStyle}>
+          <InvertButton onInvertToggle={this.onInvertToggle} inverted={inverted}/>
+          <ZoomButtons zoom={zoom} onZoomClick={this.onZoomClick}/>
+        </div>
+        <MainImage imageData={imageData} teardrop1={teardrop1}
+          teardrop2={teardrop2} angle={angle} zoom={zoom}
+          onChange={this.onImageChange} inverted={inverted}/>
+
+
+        <div style={angleOverlayStyle}>
+          <AngleEntry angle={angle} onChange={this.onAngleChange}/>
+          <Prompt string={promptString}/>
+        </div>
       </div>
     );
   };
