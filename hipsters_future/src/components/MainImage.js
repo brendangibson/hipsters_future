@@ -1,4 +1,5 @@
 import React from 'react';
+import Draggable from 'react-draggable';
 import Teardrop from './Teardrop';
 import InklinationLine from './InklinationLine';
 import TeardropLine from './TeardropLine';
@@ -80,17 +81,30 @@ const MainImage = props => {
       // otherwise do nothing
     }
 
+    const onTeardrop1Drag = (position) => {
+      props.onChange({teardrop1: [position.x, position.y]})
+    }
+
+    const onTeardrop2Drag = (position) => {
+      props.onChange({teardrop2: [position.x, position.y]})
+    }
+
+
     return (
       <div style={style} onClick={onClick}>
-        <div style={innerStyle}>
-          <img src={imageData} style={imgStyle} alt='hip alignment'/>
-          <Teardrop position={teardrop1}/>
-          <Teardrop position={teardrop2}/>
-          <svg style={svgStyle}>
-            <TeardropLine teardrop1={teardrop1} teardrop2={teardrop2} />
-            <InklinationLine teardrop1={teardrop1} teardrop2={teardrop2} angle={angle}/>
-          </svg>
-        </div>
+        <Draggable>
+          <div>
+          <div style={innerStyle}>
+            <img src={imageData} style={imgStyle} alt='hip alignment'/>
+            <Teardrop position={teardrop1} onDrag={onTeardrop1Drag}/>
+            <Teardrop position={teardrop2} onDrag={onTeardrop2Drag}/>
+            <svg style={svgStyle}>
+              <TeardropLine teardrop1={teardrop1} teardrop2={teardrop2} />
+              <InklinationLine teardrop1={teardrop1} teardrop2={teardrop2} angle={angle}/>
+            </svg>
+          </div>
+          </div>
+        </Draggable>
       </div>
     );
   };

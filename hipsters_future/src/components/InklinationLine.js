@@ -1,5 +1,6 @@
 import React from 'react';
 import colors from '../colors';
+import Draggable from 'react-draggable';
 
 const distance = 1000;
 
@@ -47,21 +48,36 @@ const InklinationLine = props => {
     const x2 = x1 + Math.cos(realAngle) * distance;
     const y2 = y1 + Math.sin(realAngle) * distance;
 
-    const onDrag = (e) => {
-        const x = e && e.target && e.target.clientX;
-        const y = e && e.target && e.target.clientY;
 
-        console.log('x: ', x, 'y: ', y)
+    const onDrag = (e, position) => {
+      e.preventDefault();
+      e.stopPropagation();
+      props.onDrag && props.onDrag(position)
+    }
 
-        props.onDrag && props.onDrag([x, y])
+    const onDragStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    const onDragEnd = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    const onMouseDown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
     }
 
 
     return (
-      <g>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} style={style} />
-        <line x1={x1} y1={y1} x2={x2} y2={y2} style={targetStyle} onDrag={onDrag}/>
-      </g>
+      <Draggable onStart={onDragStart} onEnd={onDragEnd} onDrag={onDrag} onMouseDown={onMouseDown}>
+        <g>
+          <line x1={x1} y1={y1} x2={x2} y2={y2} style={style} />
+          <line x1={x1} y1={y1} x2={x2} y2={y2} style={targetStyle} onDrag={onDrag}/>
+        </g>
+      </Draggable>
     );
   };
 

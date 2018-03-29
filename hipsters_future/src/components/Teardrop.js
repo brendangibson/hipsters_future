@@ -1,4 +1,5 @@
 import React from 'react';
+import Draggable from 'react-draggable';
 import colors from '../colors';
 
 const targetSize = '6vh';
@@ -35,33 +36,41 @@ const Teardrop = props => {
 
     const style = {
       position: 'absolute',
-      top: `calc(${top}px - ${centerOffset})`,
-      left: `calc(${left}px - ${centerOffset})`,
+      top: `-${centerOffset}`,
+      left: `-${centerOffset}`,
       height: targetSize,
       width: targetSize,
       cursor: 'pointer'
     };
 
-    console.log('style: ', style)
-    console.log('teardropStyle: ', teardropStyle)
+    const onDrag = (e, position) => {
+      e.preventDefault();
+      e.stopPropagation();
+      props.onDrag && props.onDrag(position)
+    }
 
-    const onDrag = (e) => {
-      const target = e.target;
-      if (!target) {
-        return
-      }
+    const onDragStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-      const x = target.clientX;
-      const y = target.clientY;
+    const onDragEnd = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-      props.onDrag && props.onDrag([x, y])
+    const onMouseDown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
     }
 
 
     return hasPosition ? (
-        <div style={style} onDrag={onDrag}>
-          <div style={teardropStyle} />
-        </div>
+        <Draggable onDrag={onDrag} onStart={onDragStart} onStop={onDragEnd} onMouseDown={onMouseDown} position={{x: left, y: top}}>
+          <div style={style}>
+            <div style={teardropStyle} />
+          </div>
+        </Draggable>
       )
       : null
   };
