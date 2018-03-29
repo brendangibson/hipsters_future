@@ -53,15 +53,15 @@ const buttonWrapperStyle = {
 */
 const OpeningView = props => {
 
-    const {onInputImage} = props;
+    const {onInputImage, onImageLoad} = props;
 
     return (
       <div style={style}>
-        <h1 style={titleStyle}>{strings.title}</h1>
+        {/*}<h1 style={titleStyle}>{strings.title}</h1>*/}
         <img style={imageStyle} src={hip} alt='hip' />
         <p style={blurbStyle}>{strings.openingBlurb}</p>
         <div style={buttonWrapperStyle}>
-          <InputImageButton onClick={onInputImage}/>
+          <InputImageButton onClick={onInputImage} onImageLoad={onImageLoad}/>
         </div>
       </div>
     );

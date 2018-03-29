@@ -50,7 +50,7 @@ class App extends Component {
     return (
       <div style={style}>
         {view === openingView ?
-          <OpeningView onInputImage={this.showImagePreview}/>
+          <OpeningView onInputImage={this.showImagePreview} onImageLoad={this.onImageLoad}/>
           : null
         }
         {view === imagePreviewView ?
