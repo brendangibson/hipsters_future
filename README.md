@@ -2,7 +2,7 @@
 
 A prototype for an application to assist a surgeon in hip replacement surgery.
 
-View the completed prototype at [hipsters_future.space](http://hipsters_future.space)
+View the completed prototype at [hipstersfuture.space](http://hipstersfuture.space)
 
 
 ## The Tech
@@ -29,7 +29,7 @@ I chose to have a little bit of CSS, but most styling is directlty in the compon
 * `cd hipsters_future/hipsters_future`
 * Run `npm run start`
 * Browse to `localhost:3000` unless that happens automagically for you
-* OR, just browse to [hipsters_future.space](http://hipsters_future.space)
+* OR, just browse to [hipstersfuture.space](http://hipstersfuture.space)
 
 * Here is a [sample image](https://raw.githubusercontent.com/brendangibson/hipsters_future/f23e94f78ca8762da25fe3b577609c4b3558c310/hipxray.jpg) that you can use for testing if you don't have access to your own imagery.
 
