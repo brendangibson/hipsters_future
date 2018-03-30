@@ -20,6 +20,8 @@ I chose to have a little bit of CSS, but most styling is directlty in the compon
 * The dragging is not perfect, especially when zoomed-in. 
 * Safari has some bugs with using the *vh* and *vw* units which I did not have time to work around.
 * I would have spent more time on the design and use of colors if I had a week rather than two days.
+* There is very little error checking.
+* No unit tests.
 
 ## Running this yourself
 
@@ -28,4 +30,6 @@ I chose to have a little bit of CSS, but most styling is directlty in the compon
 * Run `npm run start`
 * Browse to `localhost:3000` unless that happens automagically for you
 * OR, just browse to [hipsters_future.space](http://hipsters_future.space)
+
+* Here is a [sample image](https://raw.githubusercontent.com/brendangibson/hipsters_future/f23e94f78ca8762da25fe3b577609c4b3558c310/hipxray.jpg) that you can use for testing if you don't have access to your own imagery.
 
