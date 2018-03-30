@@ -29,10 +29,8 @@ const TeardropLine = props => {
 
     const m = (y2-y1)/(x2-x1);
 
-    console.log('m')
 
     // when x is 0
-
     const y0 = m * (0 - x1) + y1;
     const yMax = m * (xMax - x1) + y1;
 

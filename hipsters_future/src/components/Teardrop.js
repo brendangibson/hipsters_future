@@ -24,8 +24,10 @@ const teardropStyle = {
 */
 const Teardrop = props => {
 
-    const top = props.position && props.position[1];
-    const left = props.position && props.position[0];
+  const {zoom, position} = props
+
+    const top = position && position[1];
+    const left = position && position[0];
     const hasPosition = typeof top !== undefined &&
       typeof left !== undefined && top !== undefined && left !== undefined;
 
@@ -46,9 +48,14 @@ const Teardrop = props => {
     const onDrag = (e, position) => {
       e.preventDefault();
       e.stopPropagation();
-      props.onDrag && props.onDrag(position)
+      const zoomedPosition = {
+        x: position.lastX + position.deltaX / zoom,
+        y:position.lastY + position.deltaY / zoom
+      };
+      props.onDrag && props.onDrag(zoomedPosition);
     }
 
+    // Need to catch these events to stop dragging of lower elements
     const onDragStart = (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -66,7 +73,8 @@ const Teardrop = props => {
 
 
     return hasPosition ? (
-        <Draggable onDrag={onDrag} onStart={onDragStart} onStop={onDragEnd} onMouseDown={onMouseDown} position={{x: left, y: top}}>
+        <Draggable onDrag={onDrag} onStart={onDragStart} onStop={onDragEnd}
+          onMouseDown={onMouseDown} position={{x: left, y: top}}>
           <div style={style}>
             <div style={teardropStyle} />
           </div>

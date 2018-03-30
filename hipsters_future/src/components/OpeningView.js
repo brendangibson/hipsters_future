@@ -3,6 +3,7 @@ import InputImageButton from './InputImageButton';
 import strings from '../strings';
 import colors from '../colors';
 import hip from '../hip.jpg';
+import hip2 from '../hip2.png';
 
 const style = {
   backgroundImage: `url(${hip})`,
@@ -11,19 +12,12 @@ const style = {
   width: '100%'
 };
 
-const titleStyle = {
-  color: colors.titleText,
-  width: '100%',
-  textAlign: 'center',
-  fontSize: '10vh'
-};
-
 const imageStyle = {
   display: 'block',
   height: '50vh',
   boxShadow: '0 3px 3px',
   position: 'absolute',
-  top: '50%',
+  top: '60%',
   left: '50%',
   transform: 'translate(-50%, -50%)'
 };
@@ -34,10 +28,10 @@ const blurbStyle = {
   boxSizing: 'border-box',
   textAlign: 'center',
   fontSize: '5vh',
-  padding: '5vh',
+  padding: '5vh 10vw',
   background: colors.overlay,
   position: 'absolute',
-  bottom: '30vh'
+  top: '5vh'
 }
 
 const buttonWrapperStyle = {
@@ -62,7 +56,7 @@ const OpeningView = props => {
     return (
       <div style={style}>
         {/*}<h1 style={titleStyle}>{strings.title}</h1>*/}
-        <img style={imageStyle} src={hip} alt='hip' />
+        <img style={imageStyle} src={hip2} alt='hip' />
         <p style={blurbStyle}>{strings.openingBlurb}</p>
         <div style={buttonWrapperStyle}>
           <InputImageButton onClick={onInputImage} onImageLoad={onImageLoad}/>

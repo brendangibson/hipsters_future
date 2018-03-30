@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import strings from '../strings';
+import colors from '../colors';
 
+// max and min zoom levels
 const MAX = 10;
 const MIN = 1;
 
@@ -20,12 +22,24 @@ class ZoomButtons extends Component {
 
     const {zoom, onZoomClick} = this.props;
 
+    const style = {
+      color: colors.buttonText,
+      background: colors.controlButton,
+      textAlign: 'center',
+      width: '6vw',
+      height: '8vh',
+      border: 'none',
+      cursor: 'pointer',
+      fontSize: '5vh'
+    }
+
     return (
       <div>
-        <button onClick={onZoomClick(zoom + 1)} disabled={zoom === MAX ? true : null}>
+        <button style={style} onClick={onZoomClick(zoom + 1)} disabled={zoom === MAX ? true : null}>
           {strings.zoomInButton}
         </button>
-        <button onClick={onZoomClick(zoom - 1)} disabled={zoom === MIN ? true : null}>
+        <div style={{width: '1vw', display: 'inline-block'}}/>
+        <button style={style} onClick={onZoomClick(zoom - 1)} disabled={zoom === MIN ? true : null}>
           {strings.zoomOutButton}
         </button>
       </div>

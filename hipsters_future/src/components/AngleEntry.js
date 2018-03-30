@@ -2,7 +2,7 @@ import React from 'react';
 import strings from '../strings';
 import colors from '../colors';
 
-const fontSize = '2vh';
+const fontSize = '3vh';
 
 const style = {
   color: colors.text,

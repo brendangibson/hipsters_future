@@ -11,9 +11,10 @@ export default {
   teardrop: 'rgba(247,165,59, 0.3)',
   inklinationLine: 'rgba(247,165,59, 0.7)',
   teardropLine: 'rgba(247,165,59, 0.7)',
-  overlay: 'rgba(0,0,0,0.3)',
-  cta: 'rgba(30,100,154,1)',
-  buttonText: 'rgba(255,255,255,0.7)',
-  errorButton: 'rgba(197,70,38,1)',
-  entry: 'rgba(255,255,255,0.3)'
+  overlay: 'rgba(0,0,0, 0.3)',
+  cta: 'rgba(30,100,154, 1)',
+  buttonText: 'rgba(255,255,255, 0.7)',
+  errorButton: 'rgba(197,70,38, 1)',
+  entry: 'rgba(255,255,255, 0.3)',
+  controlButton: 'rgba(0,0,0, 0.3)'
 }

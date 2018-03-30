@@ -1,7 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import Teardrop from './Teardrop';
-import InklinationLine from './InklinationLine';
+import InklinationLineDiv from './InklinationLineDiv';
 import TeardropLine from './TeardropLine';
 
 const style = {
@@ -35,9 +35,9 @@ const MainImage = props => {
       right: 0,
       bottom: 0,
       transformOrigin: 'center center',
-
       // Using the same scale on the image and the lines and teardrops so they
       // stay in the same place relative to each other.
+      // TODO: fix draggig when zoomed
       transform: `scale(${zoom})`
     }
 
@@ -57,29 +57,18 @@ const MainImage = props => {
         return
       }
 
-      console.log('e: ', e);
       const target = e.target
       if (!target) { return }
+
+      // Get position relative to bounding box
       const boundingClientRect = target.getBoundingClientRect();
-
-      console.log('boundingClientRect: ', boundingClientRect);
-
       const x = e.clientX - boundingClientRect.left;
       const y = e.clientY - boundingClientRect.top;
 
-      console.log('x: ',x,' y:',y)
-
-      console.log('teardrop1: ', teardrop1);
-      console.log('teardrop2: ', teardrop2);
-
       if (!teardrop1 || !teardrop1.length) {
-        console.log('setting teardrop1')
-
-        props.onChange({teardrop1: [x, y]})
+        props.onChange && props.onChange({teardrop1: [x, y]})
       } else {
         if (!teardrop2 || !teardrop2.length) {
-          console.log('setting teardrop2')
-
           props.onChange && props.onChange({teardrop2: [x, y]})
         }
       }
@@ -97,6 +86,28 @@ const MainImage = props => {
 
     const onInklinationDrag = (position) => {
 
+      const x1 = teardrop1[0];
+      const y1 = teardrop1[1];
+      const x2 = teardrop2[0];
+      const y2 = teardrop2[1];
+
+      // Equation of a line is y = mx +c
+
+      const mTeardrop = (y2-y1)/(x2-x1);
+      const cTeardrop = y1 - mTeardrop * x1;
+
+      const mInklination = Math.tan(angle);
+      const cInklination = position.y - mInklination * position.x;
+
+      const yj = (mInklination * cTeardrop - mTeardrop * cInklination) / (mInklination - mTeardrop)
+      const xj = (yj - cTeardrop) / mTeardrop;
+
+      // length of line from teardrop1 to junction with inklination line
+      const lengthToJunction = Math.sqrt(((xj - x1) * (xj - x1)) + ((yj - y1) * (yj - y1)));
+      const teardropLength = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+      const inklinationJunction = lengthToJunction / teardropLength;
+      
+      props.onChange && props.onChange({inklinationJunction: inklinationJunction})
     }
 
 
@@ -106,12 +117,13 @@ const MainImage = props => {
           <div>
           <div style={innerStyle}>
             <img src={imageData} style={imgStyle} alt='hip alignment'/>
-            <Teardrop position={teardrop1} onDrag={onTeardrop1Drag}/>
-            <Teardrop position={teardrop2} onDrag={onTeardrop2Drag}/>
+            <Teardrop position={teardrop1} onDrag={onTeardrop1Drag} zoom={zoom}/>
+            <Teardrop position={teardrop2} onDrag={onTeardrop2Drag} zoom={zoom}/>
+            <InklinationLineDiv onDrag={onInklinationDrag} teardrop1={teardrop1}
+              teardrop2={teardrop2} angle={angle} junction={inklinationJunction}
+              zoom={zoom}/>
             <svg style={svgStyle}>
               <TeardropLine teardrop1={teardrop1} teardrop2={teardrop2} />
-              <InklinationLine onDrag={onInklinationDrag} teardrop1={teardrop1}
-                teardrop2={teardrop2} angle={angle} junction={inklinationJunction} />
             </svg>
           </div>
           </div>
