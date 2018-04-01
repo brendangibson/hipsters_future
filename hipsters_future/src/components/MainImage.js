@@ -26,7 +26,7 @@ const svgStyle = {
 */
 const MainImage = props => {
 
-    const {imageData, zoom, teardrop1, teardrop2, inverted, angle, inklinationJunction} = props
+    const {imageData, zoom, teardrop1, teardrop2, inverted, angle} = props
 
     const innerStyle = {
       position: 'absolute',
@@ -84,44 +84,19 @@ const MainImage = props => {
       props.onChange && props.onChange({teardrop2: [position.x, position.y]})
     }
 
-    const onInklinationDrag = (position) => {
-
-      const x1 = teardrop1[0];
-      const y1 = teardrop1[1];
-      const x2 = teardrop2[0];
-      const y2 = teardrop2[1];
-
-      // Equation of a line is y = mx +c
-
-      const mTeardrop = (y2-y1)/(x2-x1);
-      const cTeardrop = y1 - mTeardrop * x1;
-
-      const mInklination = Math.tan(angle);
-      const cInklination = position.y - mInklination * position.x;
-
-      const yj = (mInklination * cTeardrop - mTeardrop * cInklination) / (mInklination - mTeardrop)
-      const xj = (yj - cTeardrop) / mTeardrop;
-
-      // length of line from teardrop1 to junction with inklination line
-      const lengthToJunction = Math.sqrt(((xj - x1) * (xj - x1)) + ((yj - y1) * (yj - y1)));
-      const teardropLength = Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
-      const inklinationJunction = lengthToJunction / teardropLength;
-      
-      props.onChange && props.onChange({inklinationJunction: inklinationJunction})
-    }
 
 
     return (
       <div style={style} onClick={onClick}>
         <Draggable>
           <div>
-          <div style={innerStyle}>
+          <div style={innerStyle} id='mainImage'>
             <img src={imageData} style={imgStyle} alt='hip alignment'/>
             <Teardrop position={teardrop1} onDrag={onTeardrop1Drag} zoom={zoom}/>
             <Teardrop position={teardrop2} onDrag={onTeardrop2Drag} zoom={zoom}/>
-            <InklinationLineDiv onDrag={onInklinationDrag} teardrop1={teardrop1}
-              teardrop2={teardrop2} angle={angle} junction={inklinationJunction}
-              zoom={zoom}/>
+            <InklinationLineDiv teardrop1={teardrop1}
+              teardrop2={teardrop2} angle={angle}
+              zoom={zoom} />
             <svg style={svgStyle}>
               <TeardropLine teardrop1={teardrop1} teardrop2={teardrop2} />
             </svg>

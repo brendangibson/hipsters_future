@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Draggable from './Draggable';
 import colors from '../colors';
-import Draggable from 'react-draggable';
 
 const lineStyle = {
   position: 'absolute',
@@ -15,49 +15,66 @@ const lineStyle = {
 * Draws a line at the inklination angle from the teardrop line using a <div>
 *
 */
-const InklinationLineDiv = props => {
+class InklinationLineDiv extends Component {
 
-    const {angle, teardrop1, teardrop2, junction, zoom} = props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      junction: 0.5
+    };
+  }
 
-    if (typeof teardrop1 === undefined || typeof teardrop2 === undefined || teardrop1 === undefined || teardrop2 === undefined) {
-      return null;
+
+    onInklinationDrag = (position) => {
+
+      const {teardrop1, teardrop2, angle} = this.props
+
+      const x1 = teardrop1[0];
+      const y1 = teardrop1[1];
+      const x2 = teardrop2[0];
+      const y2 = teardrop2[1];
+
+      // Equation of a line is y = mx +c
+
+      const mTeardrop = (y2-y1)/(x2-x1);
+      const cTeardrop = y1 - mTeardrop * x1;
+
+      const teardropAngle = Math.atan((teardrop2[1] - teardrop1[1]) / (teardrop2[0] - teardrop1[0]));
+      const angleInRadians = ((Math.PI / 180)) *  angle;
+      const realAngle =  teardropAngle - angleInRadians ;
+
+      const mInklination = Math.tan(realAngle);
+      const cInklination = position.y - mInklination * position.x;
+
+      const yj = (mInklination * cTeardrop - mTeardrop * cInklination) / (mInklination - mTeardrop)
+      const xj = (yj - cTeardrop) / mTeardrop;
+
+      // length of line from teardrop1 to junction with inklination line
+      const lengthToJunction = (xj > x1 ? 1 : -1) * Math.sqrt(((xj - x1) * (xj - x1)) + ((yj - y1) * (yj - y1)));
+      const teardropLength = (x2 > x1 ? 1 : -1) * Math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)));
+      const inklinationJunction = lengthToJunction / teardropLength;
+
+      this.setState({junction: inklinationJunction})
     }
 
-    // percantage of teardrop line for the junction is given by junction
-    const x1 = (teardrop2[0] - teardrop1[0]) * junction + teardrop1[0];
-    const y1 = (teardrop2[1] - teardrop1[1]) * junction + teardrop1[1];
 
-    // angle of teardrop line
-    const teardropAngle = Math.atan((teardrop2[1] - teardrop1[1]) / (teardrop2[0] - teardrop1[0]));
-    const angleInRadians = ((Math.PI / 180)) *  angle;
-    const realAngle =  teardropAngle - angleInRadians ;
+    render() {
+      const {angle, teardrop1, teardrop2, zoom} = this.props;
+      const {junction} = this.state
 
-
-    const onDrag = (e, position) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const zoomedPosition = {
-        x: position.lastX + position.deltaX / zoom,
-        y:position.lastY + position.deltaY / zoom
+      if (typeof teardrop1 === undefined || typeof teardrop2 === undefined || teardrop1 === undefined || teardrop2 === undefined) {
+        return null;
       }
-      props.onDrag && props.onDrag(zoomedPosition)
-    }
 
-    // Need to prevent elements lower in the tree from being dragged
-    const onDragStart = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+      // percantage of teardrop line for the junction is given by junction
+      const x1 = (teardrop2[0] - teardrop1[0]) * junction + teardrop1[0];
+      const y1 = (teardrop2[1] - teardrop1[1]) * junction + teardrop1[1];
 
-    const onDragEnd = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+      // angle of teardrop line
+      const teardropAngle = Math.atan((teardrop2[1] - teardrop1[1]) / (teardrop2[0] - teardrop1[0]));
+      const angleInRadians = ((Math.PI / 180)) *  angle;
+      const realAngle =  teardropAngle - angleInRadians ;
 
-    const onMouseDown = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
 
     const wrapperStyle = {
       cursor: 'pointer',
@@ -69,15 +86,14 @@ const InklinationLineDiv = props => {
     }
 
     return (
-      <Draggable onStart={onDragStart} onEnd={onDragEnd} onDrag={onDrag}
-        onMouseDown={onMouseDown} position={{x: x1,y: y1}}>
-        <div>
+
+        <Draggable position={{x: x1, y: y1}} parent={document.getElementById('mainImage')} handler={this.onInklinationDrag} zoom={zoom}>
             <div style={wrapperStyle}>
               <div style={lineStyle} />
             </div>
-        </div>
-      </Draggable>
+        </Draggable>
     );
+  }
   };
 
 export default InklinationLineDiv;

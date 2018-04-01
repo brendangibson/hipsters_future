@@ -1,5 +1,5 @@
 import React from 'react';
-import Draggable from 'react-draggable';
+import Draggable from './Draggable';
 import colors from '../colors';
 
 const targetSize = '6vh';
@@ -45,36 +45,10 @@ const Teardrop = props => {
       cursor: 'pointer'
     };
 
-    const onDrag = (e, position) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const zoomedPosition = {
-        x: position.lastX + position.deltaX / zoom,
-        y:position.lastY + position.deltaY / zoom
-      };
-      props.onDrag && props.onDrag(zoomedPosition);
-    }
-
-    // Need to catch these events to stop dragging of lower elements
-    const onDragStart = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    const onDragEnd = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-    const onMouseDown = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
-
     return hasPosition ? (
-        <Draggable onDrag={onDrag} onStart={onDragStart} onStop={onDragEnd}
-          onMouseDown={onMouseDown} position={{x: left, y: top}}>
+        <Draggable zoom={zoom} handler={props.onDrag}
+            parent={document.getElementById('mainImage')}
+            position={{x: left, y: top}}>
           <div style={style}>
             <div style={teardropStyle} />
           </div>
