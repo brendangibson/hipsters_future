@@ -14,7 +14,7 @@ const style = {
 
 const imageStyle = {
   display: 'block',
-  height: '50vh',
+  height: '40vh',
   boxShadow: '0 3px 3px',
   position: 'absolute',
   top: '60%',

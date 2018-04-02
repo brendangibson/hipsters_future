@@ -5,7 +5,7 @@ import InputImageButton from './InputImageButton';
 import colors from '../colors';
 
 const style = {
-  height: '100%',
+  height: '100vh',
   opacity: 0.7
 }
 

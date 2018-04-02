@@ -26,7 +26,7 @@ class ZoomButtons extends Component {
       color: colors.buttonText,
       background: colors.controlButton,
       textAlign: 'center',
-      width: '6vw',
+      padding: '0 3vw',
       height: '8vh',
       border: 'none',
       cursor: 'pointer',
